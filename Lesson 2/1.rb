@@ -13,7 +13,5 @@ months = {
 	dec: 31}
 
 months.each do |m, v|
-	if v == 30
-		puts m
-	end
+	puts m if v == 30
 end
