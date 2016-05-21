@@ -1,5 +1,5 @@
 class Train
-  attr_reader :speed, :length, :num, :type
+  attr_accessor :speed, :length, :num, :type
   
   def initialize(num, length)
   	@num=num
@@ -36,7 +36,7 @@ class Train
   def short(car)
     if self.speed==0
       self.length -=1
-      cars.delete(car)
+      @cars.delete(car)
     else
       puts "The train is moving. Stop it first."
     end
@@ -71,18 +71,18 @@ class Train
   end
 
 protected
-attr_writer :speed, :length, :num, :type
+#attr_writer :speed, :length, :num, :type
 end
 
 class PassengerCar
-  attr_reader :car_type
+  attr_accessor :car_type
   def initialize
    @car_type="passenger"
   end
 end
 
 class CargoCar
-  attr_reader :car_type
+  attr_accessor :car_type
   def initialize
    @car_type="cargo"
   end
