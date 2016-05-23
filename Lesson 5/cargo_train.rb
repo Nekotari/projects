@@ -11,12 +11,4 @@ class CargoTrain < Train
       puts "Passenger car can't be added to a cargo train."
     end
   end
-  
-  def short(car)
-    if car.car_type == "cargo"
-      super
-    else
-      puts "No passenger cars on a cargo train."
-    end
-  end
 end
