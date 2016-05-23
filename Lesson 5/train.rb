@@ -74,20 +74,7 @@ class Train
   end
   
   def self.find(num)
-    if @@trains.has_key?(num)
-      @@trains.each do |key, value|
-        puts value if key == num
-      end
-    else
-      puts nil
-    end
+    puts @@trains[num]
   end
 end
 
-a=Train.new(7, 2)
-b=Train.new(5, 3)
-Train.find(7)
-Train.find(7)
-Train.find(5)
-Train.find(3)
-Train.find(5)

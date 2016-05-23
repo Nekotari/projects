@@ -1,3 +1,4 @@
+
 require_relative "module"
 class PassengerCar
   attr_accessor :car_type
