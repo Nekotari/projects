@@ -2,7 +2,7 @@ require_relative "station"
 require_relative "route"
 require_relative "train"
 
-class Mains
+class Main
 	attr_accessor :stations, :stations_list
   def initialize
   	@stations_list=[]
