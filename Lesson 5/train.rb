@@ -1,11 +1,14 @@
+require_relative "module"
 class Train
   attr_accessor :speed, :length, :num, :type
-  
+  include Produced
+  @@trains={}
   def initialize(num, length)
   	@num=num
   	@length=length
     @speed =0
     @cars=[]
+    @@trains[num]=self.itself
   end
 
   def plus_speed(v)
@@ -70,64 +73,21 @@ class Train
     end
   end
   
-end
-
-class PassengerCar
-  attr_accessor :car_type
-  def initialize
-   @car_type="passenger"
-  end
-end
-
-class CargoCar
-  attr_accessor :car_type
-  def initialize
-   @car_type="cargo"
-  end
-end
-
-class CargoTrain < Train
-  def initialize(num, length)
-    super
-    @type="cargo"
-  end
-
-  def long(car)
-    if car.car_type == "cargo"
-      super
+  def self.find(num)
+    if @@trains.has_key?(num)
+      @@trains.each do |key, value|
+        puts value if key == num
+      end
     else
-      puts "Passenger car can't be added to a cargo train."
-    end
-  end
-  
-  def short(car)
-    if car.car_type == "cargo"
-      super
-    else
-      puts "No passenger cars on a cargo train."
+      puts nil
     end
   end
 end
 
-class PassengerTrain < Train
-  def initialize(num, length)
-    super
-    @type="passenger"
-  end
-  
-  def long(car)
-    if car.car_type == "passenger"
-      super
-    else
-      puts "Cargo car can't be added to a passenger train."
-    end
-  end
-  
-  def short(car_type)
-    if car.car_type == "passenger"
-      super
-    else
-      puts "No cargo cars on a passenger train."
-    end
-  end
-end
+a=Train.new(7, 2)
+b=Train.new(5, 3)
+Train.find(7)
+Train.find(7)
+Train.find(5)
+Train.find(3)
+Train.find(5)

@@ -1,9 +1,12 @@
 class Station
 
   attr_accessor :name
+  
+  @@stations=[]
   def initialize(name)
   	@name=name
   	@train_list={}
+    @@stations<<@name
   end
 
   def income_train(train)
@@ -25,5 +28,9 @@ class Station
 
   def send_train(train)
     @train_list.delete(train.num)
+  end
+
+  def self.all
+    puts @@stations
   end
 end
