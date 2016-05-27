@@ -1,15 +1,14 @@
 class Station
-
   attr_accessor :name
   NAME = /\w+/
-  @@stations=[]
+  @@stations = []
 
   def initialize(name)
-  	@name=name.to_s
+    @name = name.to_s
     validate!
-  	@train_list={}
-    @trains=[]
-    @@stations<<@name
+    @train_list = {}
+    @trains = []
+    @@stations << @name
   end
 
   def valid?
@@ -17,17 +16,16 @@ class Station
   rescue
     false
   end
-  
-  def station_block(&block)
-    @trains.each do |train| 
-      block.call(train)
+
+  def station_block
+    @trains.each do |train|
+      yield(train)
     end
   end
 
-
   def income_train(train)
     @train_list[train.num] = train.type
-    @trains<<train
+    @trains << train
   end
 
   def list
@@ -36,9 +34,7 @@ class Station
 
   def type_list(type)
     @train_list.each do |key, value|
-      if type == value
-        puts key
-      end
+      puts key if type == value
     end
   end
 
@@ -50,9 +46,10 @@ class Station
     puts @@stations
   end
 
-protected
+  protected
+
   def validate!
-    raise "Invalid name format!" if name !~ NAME
+    raise 'Invalid name format!' if name !~ NAME
     true
   end
 end

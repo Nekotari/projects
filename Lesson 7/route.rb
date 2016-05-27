@@ -1,10 +1,10 @@
 class Route
   NAME = /\w+/
-  
+
   def initialize(first, last)
-    @first=first
-    @last=last
-    @st_list=[first, last]
+    @first = first
+    @last = last
+    @st_list = [first, last]
     validate!
   end
 
@@ -30,9 +30,10 @@ class Route
     false
   end
 
-protected
+  protected
+
   def validate!
-    raise "Invalid station name format!" if @first !~ NAME or @last !~ NAME
-  true
+    raise 'Invalid station name format!' if @first !~ NAME || @last !~ NAME
+    true
   end
 end
