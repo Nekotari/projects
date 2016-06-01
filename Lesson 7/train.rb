@@ -1,12 +1,17 @@
 require_relative 'module'
+require_relative 'lesson9'
 class Train
   attr_reader :speed, :length, :num, :type
   include Produced
+    extend Validation::ClassMethods
+  include Validation::InstanceMethods
   @@trains = {}
 
-  NUMBER = /^[A-Za-z0-9]{3}+-*+[A-Za-z0-9]{2}$/
+  #NUMBER = /^[A-Za-z0-9]{3}+-*+[A-Za-z0-9]{2}$/
   # LENGTH = /\d/
-
+validate :num, :presence
+validate :num, :format, /^[A-Za-z0-9]{3}+-*+[A-Za-z0-9]{2}$/
+#validate :num, :type, 
   def initialize(num, length)
     @num = num
     @length = length
@@ -22,11 +27,11 @@ class Train
     end
   end
 
-  def valid?
-    validate!
-  rescue
-    false
-  end
+  #def valid?
+  #  validate!
+  #rescue
+  #  false
+  #end
 
   def plus_speed(v)
     self.speed += v
@@ -97,9 +102,11 @@ class Train
   protected
 
   attr_writer :speed, :length, :num, :type
-  def validate!
-    raise 'Invalid number format!' if num !~ NUMBER
+  #def validate!
+  #  raise 'Invalid number format!' if num !~ NUMBER
     # raise "Enter number of cars." if length !~ LENGTH
-    true
-  end
+  #  true
+  #end
 end
+a=Train.new("ddddd", 4)
+puts a.valid?
