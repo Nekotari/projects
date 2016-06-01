@@ -1,6 +1,13 @@
 class Route
+  attr_accessor :first, :last
   NAME = /\w+/
-
+require_relative 'lesson9'
+  extend Validation::ClassMethods
+  include Validation::InstanceMethods
+  validate name: :first, validation: :presence
+validate name: :first, validation: :format, regexp: NAME
+validate name: :last, validation: :presence
+validate name: :last, validation: :format, regexp: NAME
   def initialize(first, last)
     @first = first
     @last = last
@@ -24,16 +31,16 @@ class Route
     @st_list.delete(name)
   end
 
-  def valid?
-    validate!
-  rescue
-    false
-  end
+  #def valid?
+  #  validate!
+  #rescue
+  #  false
+  #end
 
-  protected
+  #protected
 
-  def validate!
-    raise 'Invalid station name format!' if @first !~ NAME || @last !~ NAME
-    true
-  end
+  #def validate!
+  #  raise 'Invalid station name format!' if @first !~ NAME || @last !~ NAME
+  #  true
+  #end
 end

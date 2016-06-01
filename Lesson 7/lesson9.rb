@@ -41,46 +41,47 @@ end
 module Validation
 
  module ClassMethods
-  $validations=[]
-  def validate(*par)
-    $validations<<par[1]
-    define_method(par[1].to_sym) do
-case par[1]
-when :presence 
-      raise "NIL!" if par[0]==" "
-    when :format 
-      raise 'Invalid format!' if par[0] !~ par[2]
-    when :type 
-      raise 'Wrong class' if par[0].class.to_s != par[2].strip.to_s
-    end
-    end
-
-    
+  def validate(par={})
+    $valid_arr ||= []
+    $valid_arr<<par
   end
  end
 
-
-
  module InstanceMethods
 
-def validate!
-$validations.each do |x|
-self.send x
-end
-true
-
-
+  def validate!
+    $valid_arr.each do |hash|
+      case hash[:validation]
+      when :presence 
+  	    send :validate_presence, hash[:name]
+      when :format 
+        send :validate_format, hash[:name], hash[:regexp]
+      when :type 
+        send :validate_type, hash[:name], hash[:type]
+      end
     end
-  #def validate!
-  
-  #	true
-  #end
+  	true
+  end
 
   def valid?
   	validate!
   rescue
   	false
   end
+
+protected
+  def validate_presence(name)
+    raise "NIL!" if self.send("#{name}") == ""
+  end
+
+  def validate_format (name, regexp)
+    raise 'Invalid format!' if self.send("#{name}") !~ regexp
+  end
+
+  def validate_type (name, typeof)
+    raise 'Wrong class' if self.send("#{name}").class.to_s != typeof.to_s
+  end
+
  end
 
  end

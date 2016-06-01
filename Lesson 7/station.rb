@@ -1,7 +1,13 @@
 class Station
+  require_relative 'lesson9'
   attr_accessor :name
   NAME = /\w+/
   @@stations = []
+  extend Validation::ClassMethods
+  include Validation::InstanceMethods
+
+validate name: :name, validation: :presence
+validate name: :name, validation: :format, regexp: NAME
 
   def initialize(name)
     @name = name.to_s
@@ -11,11 +17,11 @@ class Station
     @@stations << @name
   end
 
-  def valid?
-    validate!
-  rescue
-    false
-  end
+  #def valid?
+  #  validate!
+  #rescue
+  #  false
+  #end
 
   def station_block
     @trains.each do |train|
@@ -46,10 +52,10 @@ class Station
     puts @@stations
   end
 
-  protected
+  #protected
 
-  def validate!
-    raise 'Invalid name format!' if name !~ NAME
-    true
-  end
+  #def validate!
+  #  raise 'Invalid name format!' if name !~ NAME
+  #  true
+  #end
 end

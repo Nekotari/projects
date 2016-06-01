@@ -3,14 +3,15 @@ require_relative 'lesson9'
 class Train
   attr_reader :speed, :length, :num, :type
   include Produced
-    extend Validation::ClassMethods
+  extend Validation::ClassMethods
   include Validation::InstanceMethods
   @@trains = {}
 
-  #NUMBER = /^[A-Za-z0-9]{3}+-*+[A-Za-z0-9]{2}$/
+  NUMBER = /^[A-Za-z0-9]{3}+-*+[A-Za-z0-9]{2}$/
   # LENGTH = /\d/
-validate :num, :presence
-validate :num, :format, /^[A-Za-z0-9]{3}+-*+[A-Za-z0-9]{2}$/
+validate name: :num, validation: :presence
+validate name: :num, validation: :format, regexp: NUMBER
+validate name: :length, validation: :type, type: Fixnum
 #validate :num, :type, 
   def initialize(num, length)
     @num = num
@@ -108,5 +109,3 @@ validate :num, :format, /^[A-Za-z0-9]{3}+-*+[A-Za-z0-9]{2}$/
   #  true
   #end
 end
-a=Train.new("ddddd", 4)
-puts a.valid?
