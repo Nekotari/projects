@@ -11,7 +11,7 @@ class Train
   # LENGTH = /\d/
 validate name: :num, validation: :presence
 validate name: :num, validation: :format, regexp: NUMBER
-validate name: :length, validation: :type, type: Fixnum
+validate name: :length, validation: :type, typeof: Fixnum
 #validate :num, :type, 
   def initialize(num, length)
     @num = num

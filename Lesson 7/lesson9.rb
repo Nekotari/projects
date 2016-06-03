@@ -41,24 +41,18 @@ end
 module Validation
 
  module ClassMethods
+attr_accessor :valid_arr
   def validate(par={})
-    $valid_arr ||= []
-    $valid_arr<<par
+    @valid_arr ||= []
+    @valid_arr<<par
   end
  end
 
  module InstanceMethods
 
   def validate!
-    $valid_arr.each do |hash|
-      case hash[:validation]
-      when :presence 
-  	    send :validate_presence, hash[:name]
-      when :format 
-        send :validate_format, hash[:name], hash[:regexp]
-      when :type 
-        send :validate_type, hash[:name], hash[:type]
-      end
+    self.class.valid_arr.each do |hash|
+  	  self.send "validate_#{hash[:validation]}", hash
     end
   	true
   end
@@ -70,16 +64,16 @@ module Validation
   end
 
 protected
-  def validate_presence(name)
-    raise "NIL!" if self.send("#{name}") == ""
+  def validate_presence(hash)
+    raise "NIL!" if self.send("#{hash[:name]}") == ""
   end
 
-  def validate_format (name, regexp)
-    raise 'Invalid format!' if self.send("#{name}") !~ regexp
+  def validate_format (hash)
+    raise 'Invalid format!' if self.send("#{hash[:name]}") !~ hash[:regexp]
   end
 
-  def validate_type (name, typeof)
-    raise 'Wrong class' if self.send("#{name}").class.to_s != typeof.to_s
+  def validate_type (hash)
+    raise 'Wrong class' if self.send("#{hash[:name]}").class.to_s != hash[:typeof].to_s
   end
 
  end
